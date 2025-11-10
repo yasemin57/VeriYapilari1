@@ -1,0 +1,8 @@
+Algoritma,Big O Notasyonu
+Algo 1,O(n)
+Algo 2,O(n2)
+Algo 3,O(logn)
+Algo 4,O(logn)
+Algo 5,O(logn)
+Algo 6,O(√n​)
+Algo 7,O(​√n)
