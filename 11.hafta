@@ -1,0 +1,70 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+#define MAX_NODES 6 
+
+int adj[MAX_NODES][MAX_NODES];
+bool visited[MAX_NODES];
+
+void addEdge(int u, int v) {
+    adj[u][v] = 1;
+    adj[v][u] = 1; 
+}
+
+void removeEdge(int u, int v) {
+    adj[u][v] = 0;
+    adj[v][u] = 0;
+    printf(">> Kenar kesildi: %d - %d arasindaki baglanti koparildi.\n", u, v);
+}
+
+void DFS(int startNode, int cluster_id) {
+    visited[startNode] = true;
+    printf("  Dugum %d -> Kume %d'ye eklendi.\n", startNode, cluster_id);
+
+    for (int i = 0; i < MAX_NODES; i++) {
+        // Eğer komşuysa ve daha önce ziyaret edilmediyse oraya git
+        if (adj[startNode][i] == 1 && !visited[i]) {
+            DFS(i, cluster_id);
+        }
+    }
+}
+
+void findClusters() {
+    for (int i = 0; i < MAX_NODES; i++) visited[i] = false;
+
+    int cluster_count = 0;
+
+    printf("\n--- Kumeler Tespit Ediliyor ---\n");
+    for (int i = 0; i < MAX_NODES; i++) {
+        if (!visited[i]) {
+            cluster_count++;
+            printf("Kume %d Bulundu:\n", cluster_count);
+            DFS(i, cluster_count); // Bu düğüme bağlı olan herkesi bul ve işaretle
+        }
+    }
+    printf("-------------------------------\n");
+    printf("Toplam Kume Sayisi: %d\n", cluster_count);
+}
+
+int main() {
+    // Matrisi sıfırla
+    for(int i=0; i<MAX_NODES; i++)
+        for(int j=0; j<MAX_NODES; j++)
+            adj[i][j] = 0;
+    addEdge(0, 1);
+    addEdge(1, 2);
+    addEdge(0, 2);
+
+    addEdge(3, 4);
+    addEdge(4, 5);
+    addEdge(3, 5);
+
+    addEdge(2, 3);
+
+    printf("Baslangic Durumu: Tum graph birbirine bagli (Tek Kume).\n");
+        removeEdge(2, 3);
+
+    findClusters();
+
+    return 0;
+}
