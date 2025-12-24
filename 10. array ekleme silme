@@ -1,0 +1,51 @@
+#include <stdio.h>
+
+// Diziyi ekrana basan yardımcı fonksiyon
+void printArray(int arr[], int size) {
+    for (int i = 0; i < size; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+}
+
+int main() {
+    int arr[100] = {10, 20, 30, 40, 50}; // 5 elemanlı başlangıç dizisi
+    int size = 5;
+    int capacity = 100;
+    
+    // --- 1. ELEMAN EKLEME (INSERTION) ---
+    // İndis 2'ye (30'un yerine) 99 sayısını ekleyelim
+    int pos = 2; 
+    int newValue = 99;
+
+    if (size < capacity) {
+        // Elemanları sağa kaydır (Sondan başla, ekleme indisine kadar)
+        for (int i = size; i > pos; i--) {
+            arr[i] = arr[i - 1];
+        }
+        arr[pos] = newValue; // Yeni değeri yerleştir
+        size++; // Boyutu artır
+    }
+
+    printf("Ekleme sonrasi (99 indise 2): ");
+    printArray(arr, size);
+
+    // --- 2. ELEMAN SİLME (DELETION) ---
+    // İndis 1'deki elemanı (20) silelim
+    int delPos = 1;
+
+    if (delPos < size) {
+        // Silinen indisin sağındakileri sola kaydır
+        for (int i = delPos; i < size - 1; i++) {
+            arr[i] = arr[i + 1];
+        }
+        size--; // Boyutu azalt
+    }
+
+    printf("Silme sonrasi (indis 1 silindi): ");
+    printArray(arr, size);
+
+    return 0;
+}
+
+
