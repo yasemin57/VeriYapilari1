@@ -1,2 +1,2 @@
 # VeriYapilari1
-Array
+yasemin kuş 2310213041
