@@ -1,0 +1,56 @@
+#include <stdio.h>
+
+#define MAX 100
+
+// Seyrek matris yapısı için bir struct veya 2D array kullanılabilir.
+// Burada anlaşılır olması için 2D array (üç sütunlu) kullanıyoruz.
+
+void convertToSparse(int matrix[4][5], int row, int col) {
+    // sparseMatrix[k][0] -> Satır indeksi
+    // sparseMatrix[k][1] -> Sütun indeksi
+    // sparseMatrix[k][2] -> Değer
+    int sparseMatrix[MAX][3];
+    int k = 0;
+
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < col; j++) {
+            if (matrix[i][j] != 0) {
+                sparseMatrix[k][0] = i;
+                sparseMatrix[k][1] = j;
+                sparseMatrix[k][2] = matrix[i][j];
+                k++;
+            }
+        }
+    }
+
+    // Sonucu Yazdır
+    printf("\nSeyrek Matris Formati (Row, Col, Value):\n");
+    printf("---------------------------------------\n");
+    for (int i = 0; i < k; i++) {
+        printf("%d\t%d\t%d\n", sparseMatrix[i][0], sparseMatrix[i][1], sparseMatrix[i][2]);
+    }
+    
+    printf("\nToplam tasarruf: %d hucre yerine %d hucre kullanildi.\n", (row * col), (k * 3));
+}
+
+int main() {
+    // 4x5 boyutunda örnek bir matris (çoğu eleman 0)
+    int matrix[4][5] = {
+        {0, 0, 3, 0, 4},
+        {0, 0, 0, 7, 0},
+        {0, 0, 0, 0, 0},
+        {0, 2, 6, 0, 0}
+    };
+
+    printf("Orijinal Matris:\n");
+    for(int i=0; i<4; i++) {
+        for(int j=0; j<5; j++) {
+            printf("%d ", matrix[i][j]);
+        }
+        printf("\n");
+    }
+
+    convertToSparse(matrix, 4, 5);
+
+    return 0;
+}
