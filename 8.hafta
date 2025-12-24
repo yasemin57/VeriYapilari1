@@ -1,0 +1,52 @@
+#include <stdio.h>
+
+#define MAX 10
+
+int visited[MAX];
+int graph[MAX][MAX];
+int n; 
+void findCluster(int v) {
+    visited[v] = 1;
+    printf("%d ", v); 
+
+    for (int i = 0; i < n; i++) {
+        if (graph[v][i] == 1 && !visited[i]) {
+            findCluster(i);
+        }
+    }
+}
+
+void identifyClusters() {
+    int clusterCount = 0;
+
+    for (int i = 0; i < n; i++) {
+        if (!visited[i]) {
+            clusterCount++;
+            printf("Cluster %d: { ", clusterCount);
+            findCluster(i);
+            printf("}\n");
+        }
+    }
+    
+    if (clusterCount == 0) printf("Grafta dugum bulunmuyor.\n");
+}
+
+int main() {
+    n = 6;
+    
+    for(int i=0; i<n; i++)
+        for(int j=0; j<n; j++)
+            graph[i][j] = 0;
+
+    graph[0][1] = graph[1][0] = 1;
+    graph[1][2] = graph[2][1] = 1;
+
+    graph[3][4] = graph[4][3] = 1;
+
+
+    printf("Graftaki Kumeler (Clusters):\n");
+    printf("---------------------------\n");
+    identifyClusters();
+
+    return 0;
+}
